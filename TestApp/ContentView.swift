@@ -41,6 +41,12 @@ struct ContentView: View {
                         withAnimation(.easeInOut) {
                             isMenuVisible = false
                         }
+                    },
+                    onSelectAbout: {
+                        withAnimation(.easeInOut) {
+                            isMenuVisible = false
+                        }
+                        path.append(.about)
                     }
                 )
             }
@@ -62,6 +68,9 @@ struct ContentView: View {
                 case .calculator:
                     CalculatorView()
                         .navigationTitle("Calculator")
+                case .about:
+                    AboutView()
+                        .navigationTitle("About")
                 }
             }
         }
@@ -70,12 +79,14 @@ struct ContentView: View {
 
 private enum Route: Hashable {
     case calculator
+    case about
 }
 
 private struct SideMenuView: View {
     @Binding var isVisible: Bool
     let onSelectCalculator: () -> Void
     let onSelectClock: () -> Void
+    let onSelectAbout: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -91,6 +102,10 @@ private struct SideMenuView: View {
                 .font(.title3)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
+            Button("About", action: onSelectAbout)
+                .font(.title3)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
             Spacer()
         }
         .padding(.horizontal, 24)
@@ -100,6 +115,32 @@ private struct SideMenuView: View {
         .offset(x: isVisible ? 0 : -260)
         .shadow(color: Color.black.opacity(0.2), radius: 8, x: 2, y: 0)
         .animation(.easeInOut, value: isVisible)
+    }
+}
+
+private struct AboutView: View {
+    private let phoneNumber = "+37367770604"
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Vitalie Bancu")
+                .font(.title2)
+                .fontWeight(.semibold)
+
+            Text("software inginer")
+                .font(.title3)
+                .foregroundStyle(.secondary)
+
+            if let phoneURL = URL(string: "tel:\(phoneNumber)") {
+                Link("tel - \(phoneNumber)", destination: phoneURL)
+                    .font(.title3)
+            }
+
+            Spacer()
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color(.systemGroupedBackground))
     }
 }
 
