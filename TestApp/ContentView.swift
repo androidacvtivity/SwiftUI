@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+internal import Combine
 
 struct ContentView: View {
     @State private var isMenuVisible = false
