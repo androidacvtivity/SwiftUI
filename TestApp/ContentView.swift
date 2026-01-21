@@ -120,7 +120,10 @@ private struct SideMenuView: View {
 }
 
 private struct AboutView: View {
-    private let phoneNumber = "+37367770604"
+    private let phoneNumbers = [
+        "+37367770604",
+        "+37368325707"
+    ]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -132,9 +135,11 @@ private struct AboutView: View {
                 .font(.title3)
                 .foregroundStyle(.secondary)
 
-            if let phoneURL = URL(string: "tel:\(phoneNumber)") {
-                Link("tel - \(phoneNumber)", destination: phoneURL)
-                    .font(.title3)
+            ForEach(phoneNumbers, id: \.self) { number in
+                if let phoneURL = URL(string: "tel:\(number)") {
+                    Link("tel - \(number)", destination: phoneURL)
+                        .font(.title3)
+                }
             }
 
             Spacer()
